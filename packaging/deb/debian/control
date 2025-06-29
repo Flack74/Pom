@@ -1,0 +1,25 @@
+Source: pom
+Section: utils
+Priority: optional
+Maintainer: Flack <your.email@example.com>
+Build-Depends: debhelper-compat (= 13), golang-go (>= 1.24)
+Standards-Version: 4.5.1
+Homepage: https://github.com/flack/pom
+Rules-Requires-Root: no
+
+Package: pom
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libnotify-bin, pulseaudio-utils
+Description: CLI Pomodoro Timer
+ A feature-rich command-line Pomodoro timer written in Go.
+ This application helps you stay focused and productive using
+ the Pomodoro Technique — alternating focused work periods
+ with short breaks.
+ .
+ Features:
+  * Live countdown timer with concurrent execution
+  * Cross-platform notifications
+  * Session statistics and tracking
+  * Configurable work/break durations
+  * JSON-based configuration persistence
+  * Session history logging 

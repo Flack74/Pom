@@ -1,0 +1,86 @@
+.TH POM 1 "January 2024" "pom 1.0.0" "User Commands"
+.SH NAME
+pom \- A feature-rich command-line Pomodoro timer
+.SH SYNOPSIS
+.B pom
+[\fB\-h\fR|\fB\-\-help\fR]
+[\fB\-v\fR|\fB\-\-version\fR]
+.br
+.B pom start
+[\fB\-w\fR|\fB\-\-work\fR \fIDURATION\fR]
+[\fB\-b\fR|\fB\-\-break\fR \fIDURATION\fR]
+[\fB\-s\fR|\fB\-\-sessions\fR \fICOUNT\fR]
+.br
+.B pom stats
+[\fB\-d\fR|\fB\-\-days\fR \fIDAYS\fR]
+.SH DESCRIPTION
+.B pom
+is a command-line Pomodoro timer that helps you stay focused and productive using the Pomodoro Technique. It alternates focused work periods with short breaks, helping you maintain a healthy work rhythm.
+.SH OPTIONS
+.TP
+.BR \-h ", " \-\-help
+Display help information and exit.
+.TP
+.BR \-v ", " \-\-version
+Display version information and exit.
+.SS "Start Command Options"
+.TP
+.BR \-w ", " \-\-work =\fIDURATION\fR
+Set work period duration in minutes (default: 25).
+.TP
+.BR \-b ", " \-\-break =\fIDURATION\fR
+Set break period duration in minutes (default: 5).
+.TP
+.BR \-s ", " \-\-sessions =\fICOUNT\fR
+Set number of work sessions (default: 4).
+.SS "Stats Command Options"
+.TP
+.BR \-d ", " \-\-days =\fIDAYS\fR
+Show statistics for the last N days (default: 7).
+.SH CONTROLS
+During an active Pomodoro session:
+.TP
+.B p
+Pause the current timer
+.TP
+.B r
+Resume the paused timer
+.TP
+.B q
+Quit the current session
+.SH FEATURES
+.IP \[bu] 2
+Live countdown timer with concurrent execution
+.IP \[bu]
+Cross-platform notifications (desktop & sound)
+.IP \[bu]
+Pause/resume/quit functionality
+.IP \[bu]
+Session logging and statistics
+.IP \[bu]
+Color-coded terminal output
+.IP \[bu]
+Graceful interruption handling
+.SH EXAMPLES
+.TP
+Start a standard Pomodoro session:
+.B pom start
+.TP
+Custom work/break duration:
+.B pom start -w 30 -b 10
+.TP
+View last 14 days of statistics:
+.B pom stats -d 14
+.SH FILES
+.TP
+.I ~/.config/pom/config.json
+User configuration file
+.TP
+.I ~/.local/share/pom/history.json
+Session history and statistics
+.SH BUGS
+Report bugs at: https://github.com/flack/pom/issues
+.SH AUTHOR
+Written by Flack.
+.SH COPYRIGHT
+Copyright \(co 2024 Flack. License MIT. 

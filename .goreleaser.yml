@@ -1,0 +1,90 @@
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+    mod_timestamp: '{{ .CommitTimestamp }}'
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else }}{{ .Arch }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - '^chore:'
+
+release:
+  draft: false
+  prerelease: auto
+  name_template: "v{{.Version}}"
+
+brews:
+  - name: pom
+    tap:
+      owner: flack
+      name: homebrew-pom
+    commit_author:
+      name: goreleaserbot
+      email: bot@goreleaser.com
+    homepage: "https://github.com/flack/pom"
+    description: "A feature-rich command-line Pomodoro timer written in Go"
+    license: "MIT"
+    dependencies:
+      - name: go
+        type: build
+    install: |
+      bin.install "pom"
+    test: |
+      system "#{bin}/pom", "--version"
+
+nfpms:
+  - file_name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else }}{{ .Arch }}{{ end }}
+    homepage: https://github.com/flack/pom
+    description: "A feature-rich command-line Pomodoro timer written in Go"
+    maintainer: Flack <your.email@example.com>
+    license: MIT
+    vendor: Flack
+    formats:
+      - deb
+      - rpm
+      - apk
+    dependencies:
+      - libnotify-bin
+      - pulseaudio-utils
+    recommends:
+      - notify-send
+    contents:
+      - src: ./LICENSE
+        dst: /usr/share/doc/pom/LICENSE
+      - src: ./README.md
+        dst: /usr/share/doc/pom/README.md 
