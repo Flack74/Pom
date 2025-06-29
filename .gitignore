@@ -1,0 +1,78 @@
+# Binaries and compiled files
+/pom
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go specific
+*.o
+*.a
+*.test
+/vendor/
+
+# Build output
+/dist/
+/build/
+/bin/
+
+# Package files
+*.deb
+*.rpm
+*.snap
+*.flatpak
+*.pkg.tar.zst
+*.pkg.tar.xz
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Debug files
+debug/
+
+# Local development files
+*.env
+*.local
+.env*
+config.local.json
+
+# Test coverage
+coverage.txt
+coverage.html
+
+# Temporary build files
+.go-cache/
+tmp/
+
+# Log files
+*.log
+logs/
+!logs/*.go
+
+# Snap specific
+/parts/
+/prime/
+/stage/
+/snap/.snapcraft/
+*.snap
+
+# Flatpak specific
+/.flatpak-builder/
+/build-dir/
+/repo/
+
+# AUR specific
+/aur-pom/
+*.tar.gz
+*.sig 
