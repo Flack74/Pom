@@ -3,25 +3,23 @@
 export DH_VERBOSE = 1
 export GO111MODULE = on
 export GOCACHE = $(CURDIR)/.go-cache
-export GOFLAGS = -mod=vendor
-export DH_GOPKG = github.com/flack/pom
+export GOPATH = $(CURDIR)/.go-path
+export GOFLAGS = -buildmode=pie -trimpath -mod=readonly -modcacherw
 
 %:
 	dh $@
 
-override_dh_auto_build:
-	go build -v -o pom
+override_dh_auto_clean:
+	rm -rf $(GOCACHE) $(GOPATH)
+	dh_auto_clean
 
-override_dh_auto_install:
-	dh_auto_install
-	# Install binary
-	install -D -m 0755 pom $(CURDIR)/debian/pom/usr/bin/pom
-	# Install man page
-	install -D -m 0644 packaging/man/pom.1 $(CURDIR)/debian/pom/usr/share/man/man1/pom.1
+override_dh_auto_build:
+	go build -ldflags "-linkmode external -extldflags '$(LDFLAGS)' -X pom/cmd.version=v1.0.1 -X pom/cmd.buildDate=$$(date +%Y-%m-%d_%H:%M:%S)"
 
 override_dh_auto_test:
-	# Skip tests during build
+	go test ./...
 
-override_dh_auto_clean:
-	dh_auto_clean
-	rm -f pom 
+override_dh_auto_install:
+	install -D -m 0755 pom debian/pom/usr/bin/pom
+	install -D -m 0644 packaging/man/pom.1 debian/pom/usr/share/man/man1/pom.1
+	gzip -9 debian/pom/usr/share/man/man1/pom.1 

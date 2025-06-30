@@ -64,3 +64,18 @@ func SaveConfig(config Config) error {
 
 	return os.WriteFile(configPath, data, 0644)
 }
+
+// GetConfigDir returns the path to the configuration directory
+func GetConfigDir() (string, error) {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return "", err
+	}
+
+	configDir := filepath.Join(homeDir, ".config", "pom")
+	if err := os.MkdirAll(configDir, 0755); err != nil {
+		return "", err
+	}
+
+	return configDir, nil
+}

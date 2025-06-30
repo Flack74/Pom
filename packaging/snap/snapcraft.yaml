@@ -1,39 +1,49 @@
 name: pom
-base: core22
-version: '1.0.0'
-summary: A feature-rich command-line Pomodoro timer
+version: '1.0.1'
+summary: A beautiful and feature-rich CLI Pomodoro timer
 description: |
-  A command-line Pomodoro timer that helps you stay focused and productive.
-  Features include:
-  * Live countdown timer
-  * Desktop notifications
-  * Sound alerts
-  * Session statistics
-  * Configurable work/break durations
-  * Pause/resume functionality
+  A beautiful and feature-rich command-line Pomodoro timer that helps you
+  stay focused and productive. Built with love using the time-tested
+  Pomodoro Technique®.
 
-grade: stable
+  Features:
+  * Beautiful progress bar with real-time updates
+  * Multiple color themes (default, minimal, vibrant)
+  * Daily goals with streak tracking
+  * Task planning and time tracking
+  * Comprehensive statistics
+  * Desktop notifications
+  * Motivational messages
+
+base: core22
 confinement: strict
+grade: stable
 
 apps:
   pom:
     command: bin/pom
     plugs:
-      - desktop
+      - desktop-notification
       - audio-playback
-      - unity7
+      - home
+    environment:
+      LC_ALL: C.UTF-8
 
 parts:
   pom:
     plugin: go
-    source: .
+    source: https://github.com/Flack74/pom.git
+    source-tag: v1.0.1
     build-snaps:
       - go
-    stage-packages:
-      - libnotify-bin
-      - pulseaudio-utils
     override-build: |
       craftctl default
       mkdir -p $CRAFT_PART_INSTALL/usr/share/man/man1
       cp packaging/man/pom.1 $CRAFT_PART_INSTALL/usr/share/man/man1/
-      gzip -f $CRAFT_PART_INSTALL/usr/share/man/man1/pom.1 
+      gzip -9 $CRAFT_PART_INSTALL/usr/share/man/man1/pom.1
+    build-attributes:
+      - enable-patchelf
+    build-environment:
+      - CGO_ENABLED: "1"
+      - GO111MODULE: "on"
+      - GOFLAGS: "-buildmode=pie -trimpath -mod=readonly -modcacherw" 

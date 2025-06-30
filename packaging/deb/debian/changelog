@@ -1,0 +1,14 @@
+pom (1.0.1-1) unstable; urgency=medium
+
+  * New upstream release
+  * Added beautiful progress bar with real-time updates
+  * Added multiple color themes (default, minimal, vibrant)
+  * Added daily goals with streak tracking
+  * Added task planning and time tracking
+  * Added comprehensive statistics
+  * Added motivational messages
+  * Added man page
+  * Improved desktop notifications
+  * Fixed various bugs
+
+ -- Flack74 <puspendrachawlax@gmail.com>  Mon, 30 Jun 2025 12:00:00 +0000 

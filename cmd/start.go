@@ -3,67 +3,107 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/spf13/cobra"
 
 	"pom/config"
+	"pom/logs"
 )
 
 var (
-	workMinutes  int
-	breakMinutes int
-	numSessions  int
+	workMin      int
+	breakMin     int
+	numberOfSess int
 	saveConfig   bool
+	taskID       string
 )
 
 var startCmd = &cobra.Command{
 	Use:   "start",
-	Short: "Start the Pomodoro timer",
-	Long: `Start the Pomodoro timer with custom durations.
-If no flags are provided, values from config file or defaults will be used.
-Default values: 25 minutes work, 5 minutes break, 4 sessions.`,
+	Short: "🎯 Start a pomodoro session",
+	Long: `🎯 Start a Pomodoro Timer Session
+
+Start a focused work session using the Pomodoro Technique. You can customize:
+  • Work duration (default: 25 minutes)
+  • Break duration (default: 5 minutes)
+  • Number of sessions
+  • Link to a planned task
+
+During the session:
+  • Press 'p' to pause
+  • Press 'r' to resume
+  • Press 'q' to quit (progress is saved)
+
+Examples:
+  pom start                     Start with default settings
+  pom start -w 30 -b 10        30min work + 10min break
+  pom start -s 4               Do 4 sessions
+  pom start -t task-id         Link to a planned task
+  pom start -c                 Save settings as default`,
 	Run: func(cmd *cobra.Command, args []string) {
-		cfg, err := config.LoadConfig()
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error loading config: %v\n", err)
-			os.Exit(1)
-		}
-
-		// Use flags if provided, otherwise use config values
-		if !cmd.Flags().Changed("work") {
-			workMinutes = cfg.WorkMinutes
-		}
-		if !cmd.Flags().Changed("break") {
-			breakMinutes = cfg.BreakMinutes
-		}
-		if !cmd.Flags().Changed("sessions") {
-			numSessions = cfg.NumSessions
-		}
-
-		// Save config if requested
 		if saveConfig {
-			newConfig := config.Config{
-				WorkMinutes:  workMinutes,
-				BreakMinutes: breakMinutes,
-				NumSessions:  numSessions,
-			}
-			if err := config.SaveConfig(newConfig); err != nil {
+			if err := SaveConfig(workMin, breakMin, numberOfSess); err != nil {
 				fmt.Fprintf(os.Stderr, "Error saving config: %v\n", err)
-				os.Exit(1)
 			}
-			fmt.Println("✅ Configuration saved successfully!")
 		}
 
-		StartPomodoro(workMinutes, breakMinutes, numSessions)
+		// Create a channel to handle interrupts
+		sigChan := make(chan os.Signal, 1)
+		signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+
+		// Start the timer in a goroutine
+		doneChan := make(chan bool)
+		go func() {
+			startTime := time.Now()
+			isCompleted := StartPomodoro(workMin, breakMin, numberOfSess, taskID)
+			doneChan <- isCompleted
+
+			// Log the session
+			endTime := time.Now()
+			if err := logs.LogSession(workMin, breakMin, numberOfSess, startTime, endTime, isCompleted); err != nil {
+				fmt.Fprintf(os.Stderr, "⚠️  Failed to log session: %v\n", err)
+			}
+
+			// Update task progress if a task is linked
+			if taskID != "" && isCompleted {
+				if err := config.UpdateTaskProgress(taskID, 1, workMin); err != nil {
+					fmt.Fprintf(os.Stderr, "⚠️  Failed to update task progress: %v\n", err)
+				}
+			}
+
+			// Update goals progress
+			if isCompleted {
+				if err := config.UpdateProgress(1, workMin); err != nil {
+					fmt.Fprintf(os.Stderr, "⚠️  Failed to update goals progress: %v\n", err)
+				}
+			}
+		}()
+
+		// Wait for either completion or interrupt
+		select {
+		case <-sigChan:
+			fmt.Println("\n⚠️  Pomodoro session interrupted")
+			os.Exit(1)
+		case isCompleted := <-doneChan:
+			if isCompleted {
+				fmt.Println("🎉 Pomodoro session completed!")
+				if taskID != "" {
+					fmt.Println("📝 Task progress updated")
+				}
+			}
+		}
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(startCmd)
+	startCmd.Flags().IntVarP(&workMin, "work", "w", 25, "work minutes")
+	startCmd.Flags().IntVarP(&breakMin, "break", "b", 5, "break minutes")
+	startCmd.Flags().IntVarP(&numberOfSess, "sessions", "s", 1, "number of sessions")
+	startCmd.Flags().BoolVarP(&saveConfig, "save-config", "c", false, "save as default configuration")
+	startCmd.Flags().StringVarP(&taskID, "task", "t", "", "link session to a task ID")
 
-	// Add flags with default values from config.DefaultConfig
-	startCmd.Flags().IntVarP(&workMinutes, "work", "w", config.DefaultConfig.WorkMinutes, "work time in minutes")
-	startCmd.Flags().IntVarP(&breakMinutes, "break", "b", config.DefaultConfig.BreakMinutes, "break time in minutes")
-	startCmd.Flags().IntVarP(&numSessions, "sessions", "s", config.DefaultConfig.NumSessions, "number of sessions")
-	startCmd.Flags().BoolVarP(&saveConfig, "save-config", "c", false, "save current settings as default configuration")
+	rootCmd.AddCommand(startCmd)
 }

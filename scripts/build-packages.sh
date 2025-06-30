@@ -9,7 +9,9 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # Version
-VERSION=$(git describe --tags --always)
+VERSION="1.0.1"
+ARCH="x86_64"
+MAINTAINER="Flack74 <puspendrachawlax@gmail.com>"
 
 echo -e "${YELLOW}Building packages for pom version ${VERSION}${NC}\n"
 
@@ -24,7 +26,8 @@ command_exists() {
 # Function to build binary
 build_binary() {
     echo -e "${YELLOW}Building Go binary...${NC}"
-    go build -ldflags="-X main.version=${VERSION}" -o dist/pom
+    go build -trimpath -buildmode=pie -mod=readonly -modcacherw \
+        -ldflags "-linkmode external -X pom/cmd.version=v${VERSION} -X pom/cmd.buildDate=$(date +%Y-%m-%d_%H:%M:%S)"
     echo -e "${GREEN}✓ Binary built successfully${NC}\n"
 }
 
@@ -48,7 +51,7 @@ build_deb() {
         cd packaging/deb
         dpkg-buildpackage -b -us -uc
         cd ../..
-        mv packaging/*.deb dist/
+        mv ../pom_${VERSION}*.deb dist/
         echo -e "${GREEN}✓ DEB package built successfully${NC}\n"
     else
         echo -e "${RED}× dpkg-buildpackage not found, skipping DEB package${NC}\n"
@@ -62,7 +65,7 @@ build_rpm() {
         cd packaging/rpm
         rpmbuild -bb pom.spec
         cd ../..
-        mv packaging/rpm/RPMS/*/*.rpm dist/
+        mv ~/rpmbuild/RPMS/${ARCH}/pom-${VERSION}*.rpm dist/
         echo -e "${GREEN}✓ RPM package built successfully${NC}\n"
     else
         echo -e "${RED}× rpmbuild not found, skipping RPM package${NC}\n"
@@ -76,7 +79,7 @@ build_snap() {
         cd packaging/snap
         snapcraft
         cd ../..
-        mv packaging/snap/*.snap dist/
+        mv pom_${VERSION}*.snap dist/
         echo -e "${GREEN}✓ Snap package built successfully${NC}\n"
     else
         echo -e "${RED}× snapcraft not found, skipping Snap package${NC}\n"
@@ -88,8 +91,7 @@ build_flatpak() {
     if command_exists flatpak-builder; then
         echo -e "${YELLOW}Building Flatpak package...${NC}"
         cd packaging/flatpak
-        flatpak-builder --repo=repo build-dir com.github.flack.pom.yml
-        flatpak build-bundle repo ../../dist/pom.flatpak com.github.flack.pom
+        flatpak-builder --repo=repo build-dir com.github.Flack74.pom.yml
         cd ../..
         echo -e "${GREEN}✓ Flatpak package built successfully${NC}\n"
     else
@@ -101,10 +103,10 @@ build_flatpak() {
 build_aur() {
     if command_exists makepkg; then
         echo -e "${YELLOW}Building AUR package...${NC}"
-        cd packaging/arch
+        cd packaging/aur-pom
         makepkg -f
         cd ../..
-        mv packaging/arch/*.pkg.tar.zst dist/
+        mv packaging/aur-pom/pom-${VERSION}*.pkg.tar.zst dist/
         echo -e "${GREEN}✓ AUR package built successfully${NC}\n"
     else
         echo -e "${RED}× makepkg not found, skipping AUR package${NC}\n"

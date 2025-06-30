@@ -1,50 +1,67 @@
 Name:           pom
-Version:        1.0.0
+Version:        1.0.1
 Release:        1%{?dist}
-Summary:        A feature-rich command-line Pomodoro timer
+Summary:        A beautiful and feature-rich CLI Pomodoro timer
 
 License:        MIT
-URL:            https://github.com/flack/pom
-Source0:        %{name}-%{version}.tar.gz
+URL:            https://github.com/Flack74/pom
+Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  golang >= 1.24
 BuildRequires:  git
 Requires:       libnotify
-Requires:       pulseaudio-utils
+Requires:       pulseaudio
 
 %description
-A feature-rich command-line Pomodoro timer written in Go.
-This application helps you stay focused and productive using
-the Pomodoro Technique — alternating focused work periods
-with short breaks.
+A beautiful and feature-rich command-line Pomodoro timer that helps you
+stay focused and productive. Built with love using the time-tested
+Pomodoro Technique®.
+
+Features:
+* Beautiful progress bar with real-time updates
+* Multiple color themes (default, minimal, vibrant)
+* Daily goals with streak tracking
+* Task planning and time tracking
+* Comprehensive statistics
+* Desktop notifications
+* Motivational messages
 
 %prep
 %autosetup
 
 %build
 go build \
-  -ldflags="-X main.version=%{version}-%{release}" \
-  -o %{name}
+    -buildmode=pie \
+    -trimpath \
+    -mod=readonly \
+    -modcacherw \
+    -ldflags "-linkmode external -extldflags '%{build_ldflags}' -X pom/cmd.version=v%{version} -X pom/cmd.buildDate=$(date +%Y-%m-%d_%H:%M:%S)"
 
 %install
-# Install binary
-install -Dm755 %{name} %{buildroot}%{_bindir}/%{name}
-
-# Install documentation
-install -Dm644 LICENSE %{buildroot}%{_docdir}/%{name}/LICENSE
-install -Dm644 README.md %{buildroot}%{_docdir}/%{name}/README.md
-
-# Install man page
+install -Dm755 pom %{buildroot}%{_bindir}/pom
 install -Dm644 packaging/man/pom.1 %{buildroot}%{_mandir}/man1/pom.1
+gzip -9 %{buildroot}%{_mandir}/man1/pom.1
+install -Dm644 LICENSE %{buildroot}%{_datadir}/licenses/%{name}/LICENSE
+install -Dm644 README.md %{buildroot}%{_datadir}/doc/%{name}/README.md
+
+%check
+go test ./...
 
 %files
 %license LICENSE
 %doc README.md
-%{_bindir}/%{name}
-%{_docdir}/%{name}/
-%{_mandir}/man1/pom.1*
+%{_bindir}/pom
+%{_mandir}/man1/pom.1.gz
 
 %changelog
-* Wed Jan 24 2024 Flack <your.email@example.com> - 1.0.0-1
-- Initial package release
-- Added man page 
+* Mon Jun 30 2025 Flack74 <puspendrachawlax@gmail.com> - 1.0.1-1
+- New upstream release
+- Added beautiful progress bar with real-time updates
+- Added multiple color themes (default, minimal, vibrant)
+- Added daily goals with streak tracking
+- Added task planning and time tracking
+- Added comprehensive statistics
+- Added motivational messages
+- Added man page
+- Improved desktop notifications
+- Fixed various bugs 

@@ -1,0 +1,16 @@
+pkgbase = pom
+	pkgdesc = A feature-rich command-line Pomodoro timer written in Go
+	pkgver = 1.0.0
+	pkgrel = 1
+	url = https://github.com/Flack74/Pom
+	arch = x86_64
+	arch = aarch64
+	license = MIT
+	makedepends = go
+	makedepends = git
+	depends = libnotify
+	depends = pulseaudio
+	source = git+https://github.com/Flack74/Pom.git#tag=v1.0.0
+	sha256sums = SKIP
+
+pkgname = pom
