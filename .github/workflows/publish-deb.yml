@@ -1,0 +1,54 @@
+name: Publish Debian Package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y debhelper devscripts build-essential dh-make reprepro
+
+      - name: Import GPG key
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import
+          echo "${{ secrets.GPG_PASSPHRASE }}" | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback -s packaging/deb/debian/changelog
+
+      - name: Build package
+        run: cd packaging/deb && dpkg-buildpackage -us -uc -b
+
+      - name: Set up repository
+        run: |
+          mkdir -p repo/conf
+          cat > repo/conf/distributions <<EOF
+          Origin: Flack
+          Label: Pom Timer
+          Codename: stable
+          Architectures: amd64
+          Components: main
+          Description: Pom Timer Repository
+          SignWith: ${{ secrets.GPG_KEY_ID }}
+          EOF
+
+      - name: Add package to repository
+        run: |
+          cd repo
+          reprepro includedeb stable ../packaging/*.deb
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./repo
+          force_orphan: true 
