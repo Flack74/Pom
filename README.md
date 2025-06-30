@@ -152,7 +152,7 @@ CLI Pomodoro Timer/
 ## 🚀 Installation
 
 ### Package Managers
-<--
+<!--
 #### Debian/Ubuntu (apt)
 ```bash
 # Add the repository
@@ -178,7 +178,7 @@ git clone https://aur.archlinux.org/pom.git
 cd pom
 makepkg -si
 ```
-<--
+<!--
 #### Alpine Linux
 ```bash
 # Using apk
@@ -316,7 +316,7 @@ Basic help is available through the command line:
 ```bash
 pom --help
 ```
-<--
+<!--
 ### Man Page
 
 Detailed documentation is available through the man page:
