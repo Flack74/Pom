@@ -8,8 +8,14 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
+# Get the directory of this script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Go to the project root
+cd "$SCRIPT_DIR/.."
+
 # Version
-VERSION="1.0.1"
+VERSION="1.0.2"
 ARCH="x86_64"
 MAINTAINER="Flack74 <puspendrachawlax@gmail.com>"
 

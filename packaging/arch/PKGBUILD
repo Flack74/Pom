@@ -1,17 +1,20 @@
-# Maintainer: Flack puspendrachawlax@gmail.com
+# Maintainer: Flack <puspendrachawlax@gmail.com>
 pkgname=pom
-pkgver=1.0.1
-pkgrel=1
-pkgdesc="A feature-rich command-line Pomodoro timer written in Go"
-arch=('x86_64' 'aarch64')
-url="https://github.com/Flack74/Pom"
-license=('MIT')
-depends=('libnotify' 'pulseaudio')
-makedepends=('go' 'git')
-source=("git+https://github.com/Flack74/Pom.git#tag=v${pkgver}")
-sha256sums=('SKIP')
+pkgver=1.0.2
+pkgrel=4
+pkgdesc="A beautiful and feature-rich CLI Pomodoro timer with notifications and sound alerts"
+url="https://github.com/Flack74/pom"
+arch=("x86_64" "aarch64")
+license=("MIT")
+depends=("libnotify" "pulseaudio" "zenity")
+makedepends=("go" "git")
+source=("git+https://github.com/Flack74/pom.git#tag=v${pkgver}")
+sha256sums=("SKIP")
 
 build() {
+    # Verify we're on the correct tag
+    git -C "$pkgname" checkout "v${pkgver}" -f
+
     cd "$pkgname"
     export CGO_CPPFLAGS="${CPPFLAGS}"
     export CGO_CFLAGS="${CFLAGS}"
@@ -19,7 +22,6 @@ build() {
     export CGO_LDFLAGS="${LDFLAGS}"
     export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
     
-    # Get build information
     _builddate=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
     _commit=$(git rev-parse --short HEAD)
     
@@ -36,4 +38,4 @@ package() {
     install -Dm755 pom "$pkgdir/usr/bin/pom"
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
     install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
-} 
+}

@@ -1,7 +1,7 @@
 pkgbase = pom
 	pkgdesc = A beautiful and feature-rich CLI Pomodoro timer with notifications and sound alerts
 	pkgver = 1.0.2
-	pkgrel = 4
+	pkgrel = 1
 	url = https://github.com/Flack74/pom
 	arch = x86_64
 	arch = aarch64
@@ -9,9 +9,9 @@ pkgbase = pom
 	makedepends = go
 	makedepends = git
 	depends = libnotify
-	depends = pulseaudio
+	depends = libpulse
 	depends = zenity
-	source = git+https://github.com/Flack74/pom.git#tag=v1.0.2
+	source = pom::git+https://github.com/Flack74/pom.git
 	sha256sums = SKIP
 
 pkgname = pom

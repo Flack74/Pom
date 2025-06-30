@@ -1,1 +1,0 @@
-deb [signed-by=/etc/apt/trusted.gpg.d/pom.gpg] https://flack.github.io/pom/debian/ stable main 

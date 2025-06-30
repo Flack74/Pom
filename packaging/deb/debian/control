@@ -9,7 +9,7 @@ Rules-Requires-Root: no
 
 Package: pom
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libnotify-bin, pulseaudio
+Depends: ${shlibs:Depends}, ${misc:Depends}, libnotify-bin, pulseaudio, zenity
 Description: Feature-rich CLI Pomodoro timer
  A beautiful and feature-rich command-line Pomodoro timer that helps you
  stay focused and productive. Built with love using the time-tested

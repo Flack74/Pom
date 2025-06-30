@@ -7,8 +7,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"pom/config"
-	"pom/logs"
+	"github.com/Flack74/pom/config"
+	"github.com/Flack74/pom/logs"
 )
 
 var statsCmd = &cobra.Command{

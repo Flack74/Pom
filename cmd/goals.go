@@ -2,9 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"pom/config"
 	"strconv"
 	"time"
+
+	"github.com/Flack74/pom/config"
 
 	"github.com/spf13/cobra"
 )

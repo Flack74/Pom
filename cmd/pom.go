@@ -5,17 +5,15 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
-	"os/exec"
 	"os/signal"
-	"runtime"
 	"strings"
 	"syscall"
 	"time"
 
 	"golang.org/x/term"
 
-	"pom/config"
-	"pom/logs"
+	"github.com/Flack74/pom/config"
+	"github.com/Flack74/pom/logs"
 )
 
 // ANSI color codes
@@ -34,20 +32,6 @@ const (
 	statePaused
 	stateQuitting
 )
-
-// sendNotification sends a system notification based on the OS
-func sendNotification(title, message string) {
-	switch runtime.GOOS {
-	case "linux":
-		exec.Command("notify-send", title, message).Run()
-		exec.Command("paplay", "/usr/share/sounds/freedesktop/stereo/complete.oga").Run()
-	case "darwin":
-		exec.Command("osascript", "-e", fmt.Sprintf(`display notification "%s" with title "%s"`, message, title)).Run()
-		exec.Command("say", message).Run()
-	default:
-		fmt.Print("\a") // Default beep for other OS
-	}
-}
 
 // handleUserInput handles keyboard input for pause/resume/quit
 func handleUserInput(timerState *int, pauseChan chan struct{}, resumeChan chan struct{}) {
@@ -256,6 +240,14 @@ func StartPomodoro(workMin, breakMin, numberOfSess int, taskID string) bool {
 	fmt.Printf("\n%s🎉 Pomodoro complete! Great job!%s\n", theme.SuccessColor, theme.TextColor)
 	fmt.Printf("%s📊 Sessions completed: %d%s\n", theme.HighlightColor, numberOfSess, theme.TextColor)
 	fmt.Printf("%s⏰ Total focus time: %.0f minutes%s\n", theme.HighlightColor, totalWorkTime.Minutes(), theme.TextColor)
+
+	// Final notification
+	if err := logs.ShowNotification("Pomodoro Complete!", "Great job on completing all your sessions!"); err != nil {
+		fmt.Fprintf(os.Stderr, "%s⚠️  Error showing notification: %v%s\n", theme.WarningColor, err, theme.TextColor)
+	}
+	if err := logs.PlaySound("work_end"); err != nil {
+		fmt.Fprintf(os.Stderr, "%s⚠️  Error playing sound: %v%s\n", theme.WarningColor, err, theme.TextColor)
+	}
 
 	return true
 }

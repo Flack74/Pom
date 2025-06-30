@@ -1,20 +1,21 @@
 #!/usr/bin/make -f
 
-export DH_VERBOSE = 1
-export GO111MODULE = on
-export GOCACHE = $(CURDIR)/.go-cache
-export GOPATH = $(CURDIR)/.go-path
-export GOFLAGS = -buildmode=pie -trimpath -mod=readonly -modcacherw
+export GOPATH=$(CURDIR)/_build
+export GOCACHE=$(CURDIR)/_build/go-cache
+export GOFLAGS=-mod=vendor
+export GO111MODULE=on
+export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS)
+export BUILDDIR=_build
 
 %:
 	dh $@
 
 override_dh_auto_clean:
-	rm -rf $(GOCACHE) $(GOPATH)
-	dh_auto_clean
+	rm -rf $(BUILDDIR)
 
 override_dh_auto_build:
-	go build -ldflags "-linkmode external -extldflags '$(LDFLAGS)' -X pom/cmd.version=v1.0.1 -X pom/cmd.buildDate=$$(date +%Y-%m-%d_%H:%M:%S)"
+	mkdir -p $(BUILDDIR)
+	go build -ldflags "-linkmode external -extldflags '$(LDFLAGS)' -X pom/cmd.version=v1.0.2 -X pom/cmd.buildDate=$$(date +%Y-%m-%d_%H:%M:%S)"
 
 override_dh_auto_test:
 	go test ./...

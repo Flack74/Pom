@@ -1,6 +1,6 @@
 app-id: com.github.Flack74.pom
 runtime: org.freedesktop.Platform
-runtime-version: '22.08'
+runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.golang
@@ -11,26 +11,37 @@ finish-args:
   - --socket=fallback-x11
   - --socket=wayland
   - --socket=pulseaudio
-  - --talk-name=org.freedesktop.Notifications
+  - --share=network
   - --filesystem=home
+  - --talk-name=org.freedesktop.Notifications
 
 build-options:
   env:
+    - GOBIN=/app/bin
+    - GOROOT=/usr/lib/sdk/golang
+    - GOPATH=/run/build/pom/go
     - GO111MODULE=on
-    - GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
 
 modules:
   - name: pom
     buildsystem: simple
     build-commands:
       - . /usr/lib/sdk/golang/enable.sh
-      - go build -ldflags "-linkmode external -extldflags '${LDFLAGS}' -X pom/cmd.version=v1.0.1 -X pom/cmd.buildDate=$(date +%Y-%m-%d_%H:%M:%S)"
+      - mkdir -p ${GOPATH}
+      - go build -ldflags "-linkmode external -extldflags '${LDFLAGS}' -X pom/cmd.version=v1.0.2 -X pom/cmd.buildDate=$(date +%Y-%m-%d_%H:%M:%S)"
       - install -Dm755 pom /app/bin/pom
-      - install -Dm644 packaging/man/pom.1 /app/share/man/man1/pom.1
-      - gzip -9 /app/share/man/man1/pom.1
-      - install -Dm644 LICENSE /app/share/licenses/pom/LICENSE
-      - install -Dm644 README.md /app/share/doc/pom/README.md
     sources:
       - type: git
         url: https://github.com/Flack74/pom.git
-        tag: v1.0.1 
+        tag: v1.0.2
+
+  - name: notifications
+    buildsystem: simple
+    build-commands:
+      - install -D /usr/bin/notify-send /app/bin/
+      - install -D /usr/bin/zenity /app/bin/
+    sources:
+      - type: package
+        name: libnotify
+      - type: package
+        name: zenity 

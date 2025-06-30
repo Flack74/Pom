@@ -2,9 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"pom/config"
 
 	"github.com/spf13/cobra"
+
+	"github.com/Flack74/pom/config"
 )
 
 var themeCmd = &cobra.Command{
