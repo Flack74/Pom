@@ -152,7 +152,7 @@ CLI Pomodoro Timer/
 ## 🚀 Installation
 
 ### Package Managers
-
+<--
 #### Debian/Ubuntu (apt)
 ```bash
 # Add the repository
@@ -167,7 +167,7 @@ sudo apt install pom
 # Using dnf
 sudo dnf install pom
 ```
-
+-->
 #### Arch Linux (pacman/AUR)
 ```bash
 # Using yay (recommended)
@@ -178,7 +178,7 @@ git clone https://aur.archlinux.org/pom.git
 cd pom
 makepkg -si
 ```
-
+<--
 #### Alpine Linux
 ```bash
 # Using apk
@@ -212,7 +212,7 @@ brew install pom
 scoop bucket add pom https://github.com/Flack74/scoop-pom.git
 scoop install pom
 ```
-
+-->
 ## 🛠️ Building from Source
 
 ### Prerequisites
@@ -316,7 +316,7 @@ Basic help is available through the command line:
 ```bash
 pom --help
 ```
-
+<--
 ### Man Page
 
 Detailed documentation is available through the man page:
@@ -331,6 +331,6 @@ The man page includes:
 - Configuration details
 - Usage examples
 - Troubleshooting tips
-
+-->
 ---
 **Built with ❤️ by Flack**

@@ -62,6 +62,6 @@ go test ./...
 - Added task planning and time tracking
 - Added comprehensive statistics
 - Added motivational messages
-- Added man page
+- Added man page 
 - Improved desktop notifications
 - Fixed various bugs 
