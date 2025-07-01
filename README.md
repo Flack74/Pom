@@ -1,6 +1,6 @@
 # 🍅 Pom - Advanced Pomodoro Timer
 
-A next-generation Pomodoro timer with CLI and Web UI, featuring AI insights, multi-profiles, cloud sync, and plugin system. Built with Go and React TypeScript.
+A next-generation Pomodoro timer with CLI and Web UI, featuring AI insights, multi-profiles, cloud sync, and plugin system. Built with Go and pure HTML/JS.
 
 ![Pom Web UI](https://img.shields.io/badge/Web%20UI-Galactic%20Flux-18FFFF?style=for-the-badge)
 ![Version](https://img.shields.io/github/v/release/Flack74/pom?style=for-the-badge)
@@ -9,7 +9,7 @@ A next-generation Pomodoro timer with CLI and Web UI, featuring AI insights, mul
 ## ✨ Features
 
 ### 🚀 **High-Impact Features**
-- 🌐 **Web UI Bridge** - Modern React interface with Galactic Flux theme
+- 🌐 **Web UI Bridge** - Modern HTML/JS interface with Galactic Flux theme
 - 👥 **Multi-Profile Support** - Work, study, quick, and custom profiles
 - 🧠 **AI-Powered Suggestions** - Personalized recommendations based on performance
 - 📅 **Calendar Heatmap** - Visual session tracking with activity levels
@@ -39,14 +39,15 @@ pom web -p 3000           # Custom port
 # Open browser to http://localhost:8080 (or your port)
 ```
 
-**✅ Verified Features:**
-- 🎨 **Galactic Flux** color palette with neon accents
-- 📱 **Responsive design** for all devices
-- ⚡ **Working API endpoints** with real-time data
-- 🎯 **Timer interface** with progress visualization
-- 📊 **Dashboard** with AI insights and stats
+**✅ Fully Working Features:**
+- 🎨 **Galactic Flux** theme with space colors and neon accents
+- 📱 **Responsive design** - works on all devices
+- ⚡ **Pure HTML/JS** - no React/Node.js dependencies
+- 🎯 **Working timer** with real-time progress visualization
+- 📊 **Dashboard** with live stats via API
 - 🌍 **Cross-platform** - Windows, Mac, Linux
-- 🔧 **SPA routing** with proper fallback handling
+- 🚀 **Instant loading** - no build process needed
+- 🔧 **Zero dependencies** - works out of the box
 
 **Color Palette:**
 - Background: Deep space navy (#0B0F1A)
@@ -254,20 +255,14 @@ flatpak install flathub com.github.Flack74.pom
 
 ### Prerequisites
 - Go 1.21+
-- Node.js 18+ (for web UI)
-- npm/yarn
 
 ### Build
 ```bash
-# CLI only
+# Build with embedded web UI
 go build -o pom .
 
-# With web UI
-cd web/frontend
-npm install
-npm run build
-cd ../..
-go build -o pom .
+# Or use Makefile for version info
+make build
 ```
 
 ### Project Structure
@@ -276,7 +271,7 @@ pom/
 ├── cmd/           # CLI commands
 ├── config/        # Configuration & data management
 ├── logs/          # Session logging
-├── web/           # Web UI server & React frontend
+├── web/           # Web UI server & HTML/JS frontend
 ├── packaging/     # Package configurations
 └── .github/       # CI/CD workflows
 ```
@@ -323,7 +318,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 - The Pomodoro Technique® by Francesco Cirillo
 - Go community for excellent libraries
-- React & Material-UI teams
 
 ---
 
