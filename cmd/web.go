@@ -28,22 +28,20 @@ Examples:
 		daemon, _ := cmd.Flags().GetBool("daemon")
 		
 		if daemon {
-			fmt.Printf("🌐 Web UI starting in background on port %d\n", port)
+			fmt.Printf("🌐 Web UI daemon mode on port %d\n", port)
 			fmt.Printf("🔗 Access at: http://localhost:%d\n", port)
-			fmt.Println("ℹ️  Use 'pkill pom' or Ctrl+C to stop")
-			// Run server in main goroutine for daemon mode
-			server := web.NewServer()
-			if err := server.Start(port); err != nil {
-				fmt.Fprintf(os.Stderr, "Failed to start web server: %v\n", err)
-				os.Exit(1)
-			}
-		} else {
-			server := web.NewServer()
-			if err := server.Start(port); err != nil {
-				fmt.Fprintf(os.Stderr, "Failed to start web server: %v\n", err)
-				os.Exit(1)
-			}
+			fmt.Println("ℹ️  Run with: nohup pom web & (for true background)")
+			fmt.Println("ℹ️  Or use: pom web (and run in tmux/screen)")
 		}
+		
+		// Always start server the same way
+		server := web.NewServer()
+		if err := server.Start(port); err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to start web server: %v\n", err)
+			os.Exit(1)
+		}
+		
+
 	},
 }
 

@@ -37,13 +37,16 @@ Launch the modern web interface with stunning space-themed design:
 pom web                    # Start on port 8080
 pom web -p 3000           # Custom port
 
-# Background daemon mode (frees terminal)
-pom web -d                # Background on port 8080
-pom web -d -p 3000        # Background on custom port
+# True background daemon (recommended)
+nohup pom web &           # Background on port 8080
+nohup pom web -p 3000 &   # Background on custom port
+
+# Alternative: daemon flag (still attached to terminal)
+pom web -d                # Shows daemon instructions
 
 # Access web UI
 # Open browser: http://localhost:8080 (or your port)
-# Stop daemon: pkill pom or Ctrl+C
+# Stop daemon: pkill pom
 ```
 
 **✅ Fully Working Features:**
