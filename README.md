@@ -324,7 +324,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - The Pomodoro Technique® by Francesco Cirillo
 - Go community for excellent libraries
 - React & Material-UI teams
-- All contributors and users
 
 ---
 

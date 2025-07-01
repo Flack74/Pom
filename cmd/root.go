@@ -10,8 +10,8 @@ import (
 
 var (
 	version   = "2.1.2"
-	buildDate = "unknown"
-	gitCommit = "unknown"
+	buildDate = "unknown" // Set via -ldflags at build time
+	gitCommit = "unknown" // Set via -ldflags at build time
 )
 
 var rootCmd = &cobra.Command{
