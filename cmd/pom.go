@@ -112,9 +112,14 @@ func countdown(duration time.Duration, label string, color string, timerState *i
 			remaining := time.Until(endTime).Round(time.Second)
 			elapsed := duration - remaining
 			progress := float64(elapsed) / float64(duration)
+			
+			// Ensure progress doesn't exceed 100%
+			if progress > 1.0 {
+				progress = 1.0
+			}
 
-			// Calculate progress bar
-			barWidth := int(float64(width) * progress)
+			// Calculate progress bar with proper rounding
+			barWidth := int(float64(width)*progress + 0.5)
 			bar := strings.Repeat("█", barWidth) + strings.Repeat("░", width-barWidth)
 
 			// Format time remaining

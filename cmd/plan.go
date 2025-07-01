@@ -24,8 +24,7 @@ Organize your work by planning tasks for your Pomodoro sessions:
 Examples:
   pom plan add "Write documentation"    Add a new task
   pom plan list                        List all tasks
-  pom plan done task-id                Mark task as complete
-  pom plan delete task-id              Remove a task
+  pom plan complete task-id            Mark task as complete
   pom start -t task-id                 Start session for task`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// ... existing code ...
