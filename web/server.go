@@ -48,19 +48,10 @@ func (s *Server) Start(port int) error {
 	api.HandleFunc("/plugins", s.handlePlugins).Methods("GET")
 	api.HandleFunc("/privacy/status", s.handlePrivacyStatus).Methods("GET")
 
-	// Serve simple HTML/JS web UI
+	// Serve embedded HTML/JS web UI
 	r.PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Try local static file first
-		if _, err := os.Stat("./web/static/index.html"); err == nil {
-			http.ServeFile(w, r, "./web/static/index.html")
-		} else if _, err := os.Stat("/usr/share/pom/web/static/index.html"); err == nil {
-			// Try system location
-			http.ServeFile(w, r, "/usr/share/pom/web/static/index.html")
-		} else {
-			// Fallback inline HTML
-			w.Header().Set("Content-Type", "text/html")
-			w.Write([]byte(`<!DOCTYPE html><html><head><title>🍅 Pom</title></head><body><h1>🍅 Pom Web UI</h1><p>Simple timer interface</p></body></html>`))
-		}
+		w.Header().Set("Content-Type", "text/html")
+		w.Write([]byte(getWebUI()))
 	})
 
 	addr := fmt.Sprintf(":%d", port)
