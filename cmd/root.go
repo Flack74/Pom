@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	version   = "2.1.6"
+	version   = "2.1.7"
 	buildDate = "unknown" // Set via -ldflags at build time
 	gitCommit = "unknown" // Set via -ldflags at build time
 )
