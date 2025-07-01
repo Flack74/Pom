@@ -148,16 +148,47 @@ pom privacy enable              # Zero logging mode
 pom privacy clear               # Delete all data
 ```
 
+## 📸 Screenshots
+
+### CLI Interface
+![CLI Timer](screenshots/cli-timer.png)
+*Beautiful progress bar with real-time countdown*
+
+![CLI Themes](screenshots/cli-themes.png)
+*Multiple color themes (default, minimal, vibrant)*
+
+![CLI Statistics](screenshots/cli-stats.png)
+*Comprehensive session tracking and analytics*
+
+### Web UI - Galactic Flux Theme
+![Web Timer](screenshots/web-timer.png)
+*Modern React interface with space-themed design*
+
+![Web Dashboard](screenshots/web-dashboard.png)
+*AI insights and productivity analytics*
+
+![Web Calendar](screenshots/web-calendar.png)
+*Calendar heatmap with session visualization*
+
 ## 🔧 Installation
 
-### Arch Linux (AUR)
+### ✅ Available Now
+
+#### Arch Linux (AUR)
 ```bash
 yay -S pom
 # or
 paru -S pom
 ```
 
-### From Source
+#### GitHub Releases
+```bash
+# Download latest release
+curl -L https://github.com/Flack74/pom/releases/latest/download/pom-linux-amd64.tar.gz | tar xz
+sudo mv pom /usr/local/bin/
+```
+
+#### From Source
 ```bash
 git clone https://github.com/Flack74/pom.git
 cd pom
@@ -165,13 +196,43 @@ go build -o pom .
 sudo cp pom /usr/local/bin/
 ```
 
-### Package Managers (Coming Soon)
-- **Debian/Ubuntu**: `apt install pom`
-- **Fedora/RHEL**: `dnf install pom`
-- **macOS**: `brew install pom`
-- **Windows**: `choco install pom`
-- **Snap**: `snap install pom`
-- **Flatpak**: `flatpak install pom`
+### 🚧 Coming Soon
+
+#### Debian/Ubuntu
+```bash
+# Coming soon
+sudo apt install pom
+```
+
+#### Fedora/RHEL
+```bash
+# Coming soon
+sudo dnf install pom
+```
+
+#### macOS
+```bash
+# Coming soon
+brew install pom
+```
+
+#### Windows
+```powershell
+# Coming soon
+choco install pom
+```
+
+#### Snap
+```bash
+# Coming soon
+sudo snap install pom
+```
+
+#### Flatpak
+```bash
+# Coming soon
+flatpak install flathub com.github.Flack74.pom
+```
 
 ## 🛠️ Development
 
