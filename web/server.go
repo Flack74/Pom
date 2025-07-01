@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/Flack74/pom/config"
 	"github.com/gorilla/mux"
@@ -47,12 +48,26 @@ func (s *Server) Start(port int) error {
 	api.HandleFunc("/plugins", s.handlePlugins).Methods("GET")
 	api.HandleFunc("/privacy/status", s.handlePrivacyStatus).Methods("GET")
 
-	// Serve React app
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./web/build/")))
+	// Serve React app with SPA routing
+	fs := http.FileServer(http.Dir("./web/build/"))
+	r.PathPrefix("/static/").Handler(fs)
+	r.PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// For SPA routing, serve index.html for non-API routes
+		if r.URL.Path != "/" && !fileExists("./web/build"+r.URL.Path) {
+			http.ServeFile(w, r, "./web/build/index.html")
+		} else {
+			fs.ServeHTTP(w, r)
+		}
+	})
 
 	addr := fmt.Sprintf(":%d", port)
 	fmt.Printf("🌐 Web UI: http://localhost%s\n", addr)
 	return http.ListenAndServe(addr, r)
+}
+
+func fileExists(filename string) bool {
+	_, err := os.Stat(filename)
+	return !os.IsNotExist(err)
 }
 
 func (s *Server) handleProfiles(w http.ResponseWriter, r *http.Request) {
