@@ -16,12 +16,8 @@ sha256sums=('SKIP')
 build() {
     cd "$srcdir/pom"
     export CGO_ENABLED=0
-    # Initialize go module if not present
-    if [ ! -f go.mod ]; then
-        go mod init github.com/Flack74/pom
-    fi
-    go mod tidy
-    go build -o pom .
+    export GO111MODULE=on
+    go build -ldflags "-s -w" -o pom .
 }
 
 package() {
