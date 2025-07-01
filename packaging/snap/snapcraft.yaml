@@ -1,49 +1,34 @@
 name: pom
-version: '1.0.1'
-summary: A beautiful and feature-rich CLI Pomodoro timer
+version: git
+summary: Advanced Pomodoro timer with CLI and Web UI
 description: |
-  A beautiful and feature-rich command-line Pomodoro timer that helps you
-  stay focused and productive. Built with love using the time-tested
-  Pomodoro Technique®.
+  Advanced Pomodoro timer featuring AI insights, multi-profiles, cloud sync,
+  and plugin system. Includes both CLI and modern web interface.
 
-  Features:
-  * Beautiful progress bar with real-time updates
-  * Multiple color themes (default, minimal, vibrant)
-  * Daily goals with streak tracking
-  * Task planning and time tracking
-  * Comprehensive statistics
-  * Desktop notifications
-  * Motivational messages
-
-base: core22
-confinement: strict
 grade: stable
+confinement: strict
+base: core22
 
 apps:
   pom:
     command: bin/pom
     plugs:
-      - desktop-notification
-      - audio-playback
       - home
-    environment:
-      LC_ALL: C.UTF-8
+      - network
+      - network-bind
+      - audio-playback
+      - desktop-notification
 
 parts:
   pom:
     plugin: go
-    source: https://github.com/Flack74/pom.git
-    source-tag: v1.0.1
+    source: .
     build-snaps:
-      - go
+      - go/1.21/stable
+      - node/18/stable
     override-build: |
-      craftctl default
-      mkdir -p $CRAFT_PART_INSTALL/usr/share/man/man1
-      cp packaging/man/pom.1 $CRAFT_PART_INSTALL/usr/share/man/man1/
-      gzip -9 $CRAFT_PART_INSTALL/usr/share/man/man1/pom.1
-    build-attributes:
-      - enable-patchelf
-    build-environment:
-      - CGO_ENABLED: "1"
-      - GO111MODULE: "on"
-      - GOFLAGS: "-buildmode=pie -trimpath -mod=readonly -modcacherw" 
+      cd web/frontend
+      npm install
+      npm run build
+      cd ../..
+      go build -ldflags "-s -w" -o $SNAPCRAFT_PART_INSTALL/bin/pom .

@@ -4,44 +4,24 @@ runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.golang
+  - org.freedesktop.Sdk.Extension.node18
 
 command: pom
-finish-args:
-  - --share=ipc
-  - --socket=fallback-x11
-  - --socket=wayland
-  - --socket=pulseaudio
-  - --share=network
-  - --filesystem=home
-  - --talk-name=org.freedesktop.Notifications
 
-build-options:
-  env:
-    - GOBIN=/app/bin
-    - GOROOT=/usr/lib/sdk/golang
-    - GOPATH=/run/build/pom/go
-    - GO111MODULE=on
+finish-args:
+  - --share=network
+  - --socket=pulseaudio
+  - --talk-name=org.freedesktop.Notifications
+  - --filesystem=home
 
 modules:
   - name: pom
     buildsystem: simple
     build-commands:
-      - . /usr/lib/sdk/golang/enable.sh
-      - mkdir -p ${GOPATH}
-      - go build -ldflags "-linkmode external -extldflags '${LDFLAGS}' -X pom/cmd.version=v1.0.2 -X pom/cmd.buildDate=$(date +%Y-%m-%d_%H:%M:%S)"
+      - cd web/frontend && npm install && npm run build && cd ../..
+      - go build -ldflags "-s -w" -o pom .
       - install -Dm755 pom /app/bin/pom
     sources:
       - type: git
         url: https://github.com/Flack74/pom.git
-        tag: v1.0.2
-
-  - name: notifications
-    buildsystem: simple
-    build-commands:
-      - install -D /usr/bin/notify-send /app/bin/
-      - install -D /usr/bin/zenity /app/bin/
-    sources:
-      - type: package
-        name: libnotify
-      - type: package
-        name: zenity 
+        tag: v2.1.0

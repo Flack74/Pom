@@ -1,336 +1,254 @@
-# 🍅 Pom - CLI Pomodoro Timer
+# 🍅 Pom - Advanced Pomodoro Timer
 
-A feature-rich command-line Pomodoro timer written in Go, helping you stay focused and productive with beautiful visuals, comprehensive tracking, and motivational feedback.
+A next-generation Pomodoro timer with CLI and Web UI, featuring AI insights, multi-profiles, cloud sync, and plugin system. Built with Go and React TypeScript.
 
-![Pom Timer Demo](docs/images/demo.gif)
-
-## 🎯 Project Overview
-
-This project showcases intermediate-level Go programming concepts including:
-- Concurrent programming with goroutines and channels
-- Cross-platform system integration
-- Advanced state management
-- Real-time user interaction
-- Data persistence and configuration management
-- Comprehensive error handling
-- Modular project architecture
+![Pom Web UI](https://img.shields.io/badge/Web%20UI-Galactic%20Flux-18FFFF?style=for-the-badge)
+![Version](https://img.shields.io/github/v/release/Flack74/pom?style=for-the-badge)
+![License](https://img.shields.io/github/license/Flack74/pom?style=for-the-badge)
 
 ## ✨ Features
 
-### Core Features
+### 🚀 **High-Impact Features**
+- 🌐 **Web UI Bridge** - Modern React interface with Galactic Flux theme
+- 👥 **Multi-Profile Support** - Work, study, quick, and custom profiles
+- 🧠 **AI-Powered Suggestions** - Personalized recommendations based on performance
+- 📅 **Calendar Heatmap** - Visual session tracking with activity levels
+- 📤 **Export/Import** - JSON/CSV data backup and analysis
+- 🔄 **Cloud Sync** - GitHub/Dropbox synchronization (optional)
+- 🧩 **Plugin System** - Custom scripts for Notion, Slack, notifications
+- 🔐 **Privacy Mode** - Zero-data logging with local-only option
+
+### 🎯 **Core Features**
 - 🎯 Beautiful progress bar with real-time countdown
-- 🎨 Multiple color themes (default, minimal, vibrant)
+- 🎨 Multiple color themes (default, minimal, vibrant, galactic)
 - 📊 Comprehensive session tracking and statistics
 - 🎯 Daily goals with streak tracking
 - 📝 Task planning and time tracking
 - 🔔 Cross-platform notifications and sounds
 - ⏯️ Pause/resume/quit functionality
 - 💪 Motivational messages and feedback
-- 📦 Multiple package formats for easy installation
 
-### Advanced Features
-- 🌈 Theme system with customizable colors
-- 📈 Detailed statistics with daily and all-time metrics
-- 🎯 Goal tracking with streaks and progress
-- 📝 Task management with time tracking
-- 🔄 Session recovery and state persistence
-- 🎛️ Configurable work/break durations
-- 🔔 OS-specific notification systems
-- ⚡ Graceful interruption handling
+## 🌐 Web UI - Galactic Flux Theme
+
+Launch the modern web interface with stunning space-themed design:
+
+```bash
+pom web                    # Start on port 8080
+pom web -p 3000           # Custom port
+```
+
+**Features:**
+- 🎨 **Galactic Flux** color palette with neon accents
+- 📱 **Responsive design** for all devices
+- ⚡ **Real-time updates** via WebSocket
+- 🎯 **Timer with progress visualization**
+- 📊 **Dashboard** with AI insights and stats
+- 🌍 **Cross-platform** - Windows, Mac, Linux
+
+**Color Palette:**
+- Background: Deep space navy (#0B0F1A)
+- Primary: Neon cyan (#18FFFF)
+- Secondary: Vibrant pink (#FF4081)
+- Success: Emerald green (#00E676)
+- Warning: Solar yellow (#FFD600)
 
 ## 🚀 Quick Start
 
-1. Install Pom using your package manager (see [Installation](#-installation))
-2. Start a basic Pomodoro session:
-   ```bash
-   pom start
-   ```
-3. Or customize your session:
-   ```bash
-   pom start -w 25 -b 5 -s 4  # 25min work, 5min break, 4 sessions
-   ```
-
-## 📖 Usage Guide
-
-### Basic Commands
+### CLI Usage
 ```bash
-# Start a Pomodoro session
-pom start                     # Default: 25min work, 5min break, 1 session
-pom start -w 30 -b 10 -s 2   # Custom durations
-pom start -c                  # Save settings as default
+# Basic session
+pom start
 
-# View statistics
-pom stats                     # Show detailed session statistics
+# Use profiles
+pom profile use work       # 45min work, 10min break
+pom start -p study        # 30min work, 5min break
 
-# Manage themes
-pom theme list               # List available themes
-pom theme set vibrant        # Set active theme
+# AI insights
+pom insights suggest      # Get personalized recommendations
+pom insights calendar     # View session heatmap
 
-# Set daily goals
-pom goals set 8 240         # Target: 8 sessions, 240 minutes per day
-pom goals show              # Show current progress
-
-# Plan tasks
-pom plan add "Project X"    # Add a new task
-pom plan list              # List active tasks
-pom start -t task-id       # Link session to a task
+# Export data
+pom export json backup.json
 ```
 
-### Interactive Controls
-During a session:
-- `p` - Pause the timer
-- `r` - Resume the timer
-- `q` - Quit the session (progress is saved)
+### Web Interface
+```bash
+# Start web server
+pom web
 
-### Theme System
-Choose from three built-in themes:
-- `default` - Professional and clean
-- `minimal` - Distraction-free experience
-- `vibrant` - Colorful and energetic style
+# Open browser to http://localhost:8080
+# Use all features through modern web interface
+```
 
-### Statistics and Tracking
-View comprehensive statistics:
-- Daily progress and goal completion
-- All-time session totals
-- Focus time and session averages
-- Current and longest streaks
-- Task-specific time tracking
+## 👥 Multi-Profile System
 
-## 🎨 Screenshots
+Pre-built profiles for different work contexts:
 
-### Timer with Progress Bar
-![Timer Progress](docs/images/timer.png)
+| Profile | Work Time | Break Time | Sessions | Use Case |
+|---------|-----------|------------|----------|----------|
+| `default` | 25min | 5min | 4 | Standard Pomodoro |
+| `work` | 45min | 10min | 3 | Deep work sessions |
+| `study` | 30min | 5min | 4 | Learning & research |
+| `quick` | 15min | 3min | 6 | Quick tasks |
 
-### Theme Examples
-![Theme Examples](docs/images/themes.png)
+```bash
+pom profile list                    # List all profiles
+pom profile use work               # Switch profile
+pom profile create "coding" 45 10 3  # Create custom
+```
 
-### Statistics View
-![Statistics](docs/images/stats.png)
+## 🧠 AI-Powered Insights
 
-## 🔧 Technical Architecture
+Get personalized suggestions based on your performance:
+
+```bash
+pom insights suggest              # AI recommendations
+pom insights today               # Today's statistics
+pom insights calendar            # Visual heatmap
+```
+
+**AI analyzes:**
+- Completion rates and patterns
+- Optimal session lengths
+- Best focus times
+- Productivity trends
+
+## 🧩 Plugin System
+
+Automate workflows with custom scripts:
+
+```bash
+pom plugins list                 # Available plugins
+pom plugins enable notion-logger # Log to Notion
+pom plugins add "my-script" "echo 'Done!'" session_end
+```
+
+**Built-in plugins:**
+- **Notion Logger** - Log sessions to Notion database
+- **Slack Notify** - Send completion notifications
+- **Break Reminder** - Desktop notifications with sound
+- **Focus Mode** - Block distracting websites
+
+## 📤 Data Management
+
+Export and sync your productivity data:
+
+```bash
+# Export
+pom export json backup.json      # Complete backup
+pom export csv sessions.csv      # Spreadsheet format
+
+# Cloud sync
+pom sync setup github           # Configure GitHub sync
+pom sync push                   # Upload data
+pom sync pull                   # Download data
+
+# Privacy
+pom privacy enable              # Zero logging mode
+pom privacy clear               # Delete all data
+```
+
+## 🔧 Installation
+
+### Arch Linux (AUR)
+```bash
+yay -S pom
+# or
+paru -S pom
+```
+
+### From Source
+```bash
+git clone https://github.com/Flack74/pom.git
+cd pom
+go build -o pom .
+sudo cp pom /usr/local/bin/
+```
+
+### Package Managers (Coming Soon)
+- **Debian/Ubuntu**: `apt install pom`
+- **Fedora/RHEL**: `dnf install pom`
+- **macOS**: `brew install pom`
+- **Windows**: `choco install pom`
+- **Snap**: `snap install pom`
+- **Flatpak**: `flatpak install pom`
+
+## 🛠️ Development
+
+### Prerequisites
+- Go 1.21+
+- Node.js 18+ (for web UI)
+- npm/yarn
+
+### Build
+```bash
+# CLI only
+go build -o pom .
+
+# With web UI
+cd web/frontend
+npm install
+npm run build
+cd ../..
+go build -o pom .
+```
 
 ### Project Structure
 ```
-CLI Pomodoro Timer/
-├── cmd/
-│   ├── goals.go    # Daily goals management
-│   ├── plan.go     # Task planning system
-│   ├── pom.go      # Core timer and display
-│   ├── root.go     # Base command setup
-│   ├── start.go    # Session initialization
-│   ├── stats.go    # Statistics and analysis
-│   └── theme.go    # Theme management
-├── config/
-│   ├── config.go   # Base configuration
-│   ├── goals.go    # Goals persistence
-│   ├── tasks.go    # Task management
-│   └── themes.go   # Theme definitions
-├── logs/
-│   ├── history.go  # Session history
-│   ├── notifications.go # System notifications
-│   └── session.go  # Session logging
-└── [rest of the existing structure]
+pom/
+├── cmd/           # CLI commands
+├── config/        # Configuration & data management
+├── logs/          # Session logging
+├── web/           # Web UI server & React frontend
+├── packaging/     # Package configurations
+└── .github/       # CI/CD workflows
 ```
 
-### Key Components
-1. **Timer Core** (`cmd/pom.go`):
-   - Concurrent timer management
-   - State machine implementation
-   - OS-specific notifications
-   - Real-time user input handling
+## 🔐 Privacy & Security
 
-2. **Configuration** (`config/config.go`):
-   - JSON serialization/deserialization
-   - File system operations
-   - Default configuration management
+- **Privacy Mode**: Zero data logging
+- **Local Storage**: All data stored locally
+- **Optional Cloud Sync**: Opt-in only
+- **No Telemetry**: No usage tracking
+- **Open Source**: Full transparency
 
-3. **Session Logging** (`logs/history.go`):
-   - Structured logging
-   - Statistical calculations
-   - Time-series data management
+## 📊 Statistics & Analytics
 
-## 🚀 Installation
+Track your productivity with detailed insights:
+- Daily/weekly/monthly progress
+- Session completion rates
+- Focus time trends
+- Goal achievement tracking
+- Streak monitoring
+- Task-specific analytics
 
-### Package Managers
-<!--
-#### Debian/Ubuntu (apt)
-```bash
-# Add the repository
-curl -s --compressed "https://Flack74.github.io/pom/KEY.gpg" | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/pom.gpg >/dev/null
-sudo curl -s --compressed -o /etc/apt/sources.list.d/pom.list "https://Flack74.github.io/pom/pom.list"
-sudo apt update
-sudo apt install pom
-```
+## 🎨 Themes
 
-#### Fedora/RHEL (rpm)
-```bash
-# Using dnf
-sudo dnf install pom
-```
--->
-#### Arch Linux (pacman/AUR)
-```bash
-# Using yay (recommended)
-yay -S pom
-
-# Or manually from AUR
-git clone https://aur.archlinux.org/pom.git
-cd pom
-makepkg -si
-```
-<!--
-#### Alpine Linux
-```bash
-# Using apk
-sudo apk add pom
-```
-
-### Universal Package Formats
-
-#### Snap
-```bash
-sudo snap install pom
-```
-
-#### Flatpak
-```bash
-flatpak install flathub com.github.Flack74.pom
-```
-
-### macOS
-
-#### Homebrew
-```bash
-brew tap Flack74/pom
-brew install pom
-```
-
-### Windows
-
-#### Scoop
-```powershell
-scoop bucket add pom https://github.com/Flack74/scoop-pom.git
-scoop install pom
-```
--->
-## 🛠️ Building from Source
-
-### Prerequisites
-
-- Go 1.24 or higher
-- For package building:
-  - DEB: `build-essential`, `debhelper`, `devscripts`
-  - RPM: `rpm-build`
-  - Snap: `snapcraft`
-  - Flatpak: `flatpak-builder`
-  - AUR: `base-devel`
-  - Man pages: `gzip`
-
-### Building
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Flack74/pom.git
-   cd pom
-   ```
-
-2. Install dependencies:
-   ```bash
-   make dev-deps
-   ```
-
-3. Build the application:
-   ```bash
-   make
-   ```
-
-4. Install (optional):
-   ```bash
-   sudo make install
-   ```
-
-### Development Commands
-
-```bash
-# Build the application
-make
-
-# Install to system
-sudo make install
-
-# Run tests
-make test
-
-# Run linter
-make lint
-
-# Clean build artifacts
-make clean
-
-# Build all package formats
-make package
-
-# Show all available commands
-make help
-```
-
-## 🔧 Configuration
-
-Configuration files are stored in `~/.config/pom/`:
-- `config.json` - General settings
-- `theme.json` - Active theme
-- `goals.json` - Daily goals
-- `tasks.json` - Task list
-- `logs/sessions.json` - Session history
-
-## 📄 License
-
-MIT License - see the [LICENSE](LICENSE) file for details.
+Choose your visual experience:
+- **Default**: Professional and clean
+- **Minimal**: Distraction-free
+- **Vibrant**: Colorful and energetic
+- **Galactic**: Space-themed (Web UI)
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
 
-## 🐛 Bug Reports
+## 📄 License
 
-Please report any issues on the [GitHub Issues](https://github.com/Flack74/pom/issues) page.
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- The Pomodoro Technique® is a registered trademark of Francesco Cirillo
-- Thanks to all contributors who have helped shape this project
+- The Pomodoro Technique® by Francesco Cirillo
+- Go community for excellent libraries
+- React & Material-UI teams
+- All contributors and users
 
-## 📚 Technical Documentation
-
-For detailed technical documentation about the concurrent programming patterns, state management, and system integration used in this project, please refer to the source code comments and the [Wiki](https://github.com/yourusername/pom/wiki) (if available). 
-
-## 📖 Documentation
-
-### Command Line Help
-
-Basic help is available through the command line:
-```bash
-pom --help
-```
-<!--
-### Man Page
-
-Detailed documentation is available through the man page:
-```bash
-man pom
-```
-
-The man page includes:
-- Complete command reference
-- All available options and flags
-- Interactive controls during sessions
-- Configuration details
-- Usage examples
-- Troubleshooting tips
--->
 ---
-**Built with ❤️ by Flack**
+
+**🚀 Ready to boost your productivity? Start with `pom start` or `pom web`!**

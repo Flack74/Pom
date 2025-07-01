@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>pom</id>
+    <version>2.1.0</version>
+    <packageSourceUrl>https://github.com/Flack74/pom</packageSourceUrl>
+    <owners>Flack74</owners>
+    <title>Pom - Advanced Pomodoro Timer</title>
+    <authors>Flack74</authors>
+    <projectUrl>https://github.com/Flack74/pom</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/Flack74/pom/main/assets/icon.png</iconUrl>
+    <copyright>2024 Flack74</copyright>
+    <licenseUrl>https://github.com/Flack74/pom/blob/main/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/Flack74/pom</projectSourceUrl>
+    <docsUrl>https://github.com/Flack74/pom/blob/main/README.md</docsUrl>
+    <bugTrackerUrl>https://github.com/Flack74/pom/issues</bugTrackerUrl>
+    <tags>pomodoro timer productivity cli web-ui go react</tags>
+    <summary>Advanced Pomodoro timer with CLI and Web UI</summary>
+    <description>
+Advanced Pomodoro timer featuring:
+- Modern Web UI with Galactic Flux theme
+- AI-powered productivity insights
+- Multi-profile support (work, study, quick)
+- Calendar heatmap visualization
+- Export/Import capabilities
+- Cloud synchronization
+- Plugin system for automation
+- Privacy mode with zero logging
+    </description>
+    <releaseNotes>https://github.com/Flack74/pom/releases</releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
