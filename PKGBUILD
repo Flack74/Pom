@@ -1,7 +1,7 @@
 # Maintainer: Flack74 <puspendrachawlax@gmail.com>
 
 pkgname=pom
-pkgver=1.0.1
+pkgver=1.0.2
 pkgrel=4
 pkgdesc="A beautiful and feature-rich CLI Pomodoro timer with notifications and sound alerts."
 arch=("x86_64")
