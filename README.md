@@ -2,6 +2,8 @@
 
 A next-generation Pomodoro timer with CLI and Web UI, featuring AI insights, multi-profiles, cloud sync, and plugin system. Built with Go and pure HTML/JS.
 
+![Go](https://img.shields.io/badge/Language-Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![Cobra CLI](https://img.shields.io/badge/CLI-Cobra-7E57C2?style=for-the-badge&logo=terminal&logoColor=white)
 ![Pom Web UI](https://img.shields.io/badge/Web%20UI-Galactic%20Flux-18FFFF?style=for-the-badge)
 ![Version](https://img.shields.io/github/v/release/Flack74/pom?style=for-the-badge)
 ![License](https://img.shields.io/github/license/Flack74/pom?style=for-the-badge)
@@ -194,27 +196,25 @@ pom privacy enable              # Zero logging mode
 pom privacy clear               # Delete all data
 ```
 
-## 📸 Screenshots
-
 ### CLI Interface
-![CLI Timer](screenshots/cli-timer.png)
+![image](https://github.com/user-attachments/assets/164def14-0d86-4e2f-aa16-399b8a6c20e2)
 *Beautiful progress bar with real-time countdown*
 
-![CLI Themes](screenshots/cli-themes.png)
+![image](https://github.com/user-attachments/assets/ca10ac43-86dd-49ee-bd33-01ce8acd266b)
 *Multiple color themes (default, minimal, vibrant)*
 
-![CLI Statistics](screenshots/cli-stats.png)
+![image](https://github.com/user-attachments/assets/48a15a2e-a4ae-458f-8ea1-917604299c85)
 *Comprehensive session tracking and analytics*
 
 ### Web UI - Galactic Flux Theme
-![Web Timer](screenshots/web-timer.png)
+![image](https://github.com/user-attachments/assets/d7ed283a-f6fc-45d6-8ad2-4ad1eb72709f)
 *Modern React interface with space-themed design*
 
-![Web Dashboard](screenshots/web-dashboard.png)
-*AI insights and productivity analytics*
+![image](https://github.com/user-attachments/assets/6e5f6d99-070a-4aad-84e9-00db25e12f0f)
+*Productivity analytics*
 
-![Web Calendar](screenshots/web-calendar.png)
-*Calendar heatmap with session visualization*
+![image](https://github.com/user-attachments/assets/f74452b9-29d3-44b8-9619-0198a01fa6c7)
+*Web cli controls with session visualization*
 
 ## 🔧 Installation
 
