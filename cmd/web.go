@@ -30,16 +30,13 @@ Examples:
 		if daemon {
 			fmt.Printf("🌐 Web UI starting in background on port %d\n", port)
 			fmt.Printf("🔗 Access at: http://localhost:%d\n", port)
-			fmt.Println("ℹ️  Use 'pkill pom' to stop the server")
-			go func() {
-				server := web.NewServer()
-				if err := server.Start(port); err != nil {
-					fmt.Fprintf(os.Stderr, "Failed to start web server: %v\n", err)
-					os.Exit(1)
-				}
-			}()
-			// Keep process alive
-			select {}
+			fmt.Println("ℹ️  Use 'pkill pom' or Ctrl+C to stop")
+			// Run server in main goroutine for daemon mode
+			server := web.NewServer()
+			if err := server.Start(port); err != nil {
+				fmt.Fprintf(os.Stderr, "Failed to start web server: %v\n", err)
+				os.Exit(1)
+			}
 		} else {
 			server := web.NewServer()
 			if err := server.Start(port); err != nil {

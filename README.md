@@ -33,13 +33,17 @@ A next-generation Pomodoro timer with CLI and Web UI, featuring AI insights, mul
 Launch the modern web interface with stunning space-themed design:
 
 ```bash
-pom web                    # Start on port 8080 (foreground)
+# Foreground mode (blocks terminal)
+pom web                    # Start on port 8080
 pom web -p 3000           # Custom port
-pom web -d                # Background daemon mode
+
+# Background daemon mode (frees terminal)
+pom web -d                # Background on port 8080
 pom web -d -p 3000        # Background on custom port
 
-# Open browser to http://localhost:8080 (or your port)
-# Use 'pkill pom' to stop background server
+# Access web UI
+# Open browser: http://localhost:8080 (or your port)
+# Stop daemon: pkill pom or Ctrl+C
 ```
 
 **✅ Fully Working Features:**
@@ -81,15 +85,22 @@ pom export json backup.json
 
 ### Web Interface
 ```bash
-# Start web server (foreground)
+# Foreground mode (terminal blocked)
 pom web
 
-# Start in background (daemon mode)
+# Background daemon mode (terminal free) ✅ RECOMMENDED
 pom web -d
 
-# Open browser to http://localhost:8080
-# Use all CLI features through web interface
-# Stop background server: pkill pom
+# Custom port
+pom web -d -p 3000
+
+# Access features:
+# 1. Open browser: http://localhost:8080
+# 2. Use Timer tab for Pomodoro sessions
+# 3. Use CLI Controls tab for all CLI commands
+# 4. Use Dashboard tab for statistics
+
+# Stop daemon: pkill pom
 ```
 
 **Troubleshooting Web UI:**
@@ -101,8 +112,14 @@ curl http://localhost:8080/
 # 2. Test API endpoints
 curl http://localhost:8080/api/profiles
 
-# 3. Try different port
-pom web -p 3001
+# 3. Check daemon process
+ps aux | grep pom
+
+# 4. Try different port
+pom web -d -p 3001
+
+# 5. Stop all instances
+pkill pom
 ```
 
 ## 👥 Multi-Profile System
