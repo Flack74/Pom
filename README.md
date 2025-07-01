@@ -33,20 +33,24 @@ A next-generation Pomodoro timer with CLI and Web UI, featuring AI insights, mul
 Launch the modern web interface with stunning space-themed design:
 
 ```bash
-pom web                    # Start on port 8080
+pom web                    # Start on port 8080 (foreground)
 pom web -p 3000           # Custom port
+pom web -d                # Background daemon mode
+pom web -d -p 3000        # Background on custom port
 
 # Open browser to http://localhost:8080 (or your port)
+# Use 'pkill pom' to stop background server
 ```
 
 **✅ Fully Working Features:**
-- 🎨 **Galactic Flux** theme with space colors and neon accents
+- 🎨 **Galactic Flux** theme with animated glow effects
 - 📱 **Responsive design** - works on all devices
 - ⚡ **Embedded in binary** - no external files needed
 - 🎯 **Working timer** with real-time progress visualization
 - 📊 **Dashboard** with live stats via API
+- 🎮 **CLI Controls** - all CLI commands via web interface
 - 🌍 **Cross-platform** - Windows, Mac, Linux
-- 🚀 **Instant loading** - works immediately
+- 🚀 **Daemon mode** - run in background
 - 🔧 **Zero dependencies** - single binary solution
 
 **Color Palette:**
@@ -77,11 +81,15 @@ pom export json backup.json
 
 ### Web Interface
 ```bash
-# Start web server
+# Start web server (foreground)
 pom web
 
+# Start in background (daemon mode)
+pom web -d
+
 # Open browser to http://localhost:8080
-# Use all features through modern web interface
+# Use all CLI features through web interface
+# Stop background server: pkill pom
 ```
 
 **Troubleshooting Web UI:**
