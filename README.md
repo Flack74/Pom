@@ -35,15 +35,18 @@ Launch the modern web interface with stunning space-themed design:
 ```bash
 pom web                    # Start on port 8080
 pom web -p 3000           # Custom port
+
+# Open browser to http://localhost:8080 (or your port)
 ```
 
-**Features:**
+**✅ Verified Features:**
 - 🎨 **Galactic Flux** color palette with neon accents
 - 📱 **Responsive design** for all devices
-- ⚡ **Real-time updates** via WebSocket
-- 🎯 **Timer with progress visualization**
+- ⚡ **Working API endpoints** with real-time data
+- 🎯 **Timer interface** with progress visualization
 - 📊 **Dashboard** with AI insights and stats
 - 🌍 **Cross-platform** - Windows, Mac, Linux
+- 🔧 **SPA routing** with proper fallback handling
 
 **Color Palette:**
 - Background: Deep space navy (#0B0F1A)
@@ -78,6 +81,19 @@ pom web
 
 # Open browser to http://localhost:8080
 # Use all features through modern web interface
+```
+
+**Troubleshooting Web UI:**
+```bash
+# If web UI doesn't load:
+# 1. Check server is running
+curl http://localhost:8080/
+
+# 2. Test API endpoints
+curl http://localhost:8080/api/profiles
+
+# 3. Try different port
+pom web -p 3001
 ```
 
 ## 👥 Multi-Profile System
