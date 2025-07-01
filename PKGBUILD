@@ -19,8 +19,8 @@ build() {
     # Initialize go module if not present
     if [ ! -f go.mod ]; then
         go mod init github.com/Flack74/pom
-        go mod tidy
     fi
+    go mod tidy
     go build -o pom .
 }
 
