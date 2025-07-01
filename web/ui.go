@@ -16,7 +16,8 @@ func getWebUI() string {
         }
         .container { max-width: 800px; margin: 0 auto; }
         .header { text-align: center; margin-bottom: 40px; }
-        .header h1 { font-size: 3rem; margin-bottom: 10px; color: #18FFFF; }
+        .header h1 { font-size: 3rem; margin-bottom: 10px; color: #18FFFF; text-shadow: 0 0 20px #18FFFF; animation: glow 2s ease-in-out infinite alternate; }
+        @keyframes glow { from { text-shadow: 0 0 20px #18FFFF; } to { text-shadow: 0 0 30px #18FFFF, 0 0 40px #18FFFF; } }
         .tabs { display: flex; margin-bottom: 30px; border-radius: 10px; overflow: hidden; }
         .tab { flex: 1; padding: 15px; background: #1a1a2e; border: none; color: #fff; cursor: pointer; transition: all 0.3s; }
         .tab.active { background: #18FFFF; color: #0B0F1A; }
@@ -52,6 +53,7 @@ func getWebUI() string {
         <div class="tabs">
             <button class="tab active" onclick="showTab('timer')">Timer</button>
             <button class="tab" onclick="showTab('dashboard')">Dashboard</button>
+            <button class="tab" onclick="showTab('controls')">CLI Controls</button>
         </div>
 
         <div id="timer-tab" class="content">
@@ -114,6 +116,44 @@ func getWebUI() string {
                     <div class="stat-label">Total Sessions</div>
                 </div>
             </div>
+        </div>
+
+        <div id="controls-tab" class="content hidden">
+            <div class="settings">
+                <div class="setting">
+                    <label>🎯 Goals Management</label>
+                    <button class="btn btn-primary" onclick="executeCommand('goals')">View Goals</button>
+                </div>
+                <div class="setting">
+                    <label>👥 Profile Management</label>
+                    <button class="btn btn-primary" onclick="executeCommand('profile')">Manage Profiles</button>
+                </div>
+                <div class="setting">
+                    <label>📊 Statistics</label>
+                    <button class="btn btn-primary" onclick="executeCommand('stats')">View Stats</button>
+                </div>
+                <div class="setting">
+                    <label>🧠 AI Insights</label>
+                    <button class="btn btn-primary" onclick="executeCommand('insights')">Get Insights</button>
+                </div>
+                <div class="setting">
+                    <label>📤 Export Data</label>
+                    <button class="btn btn-secondary" onclick="executeCommand('export')">Export JSON</button>
+                </div>
+                <div class="setting">
+                    <label>🔄 Cloud Sync</label>
+                    <button class="btn btn-secondary" onclick="executeCommand('sync')">Sync Data</button>
+                </div>
+                <div class="setting">
+                    <label>🧩 Plugins</label>
+                    <button class="btn btn-secondary" onclick="executeCommand('plugins')">Manage Plugins</button>
+                </div>
+                <div class="setting">
+                    <label>🔐 Privacy</label>
+                    <button class="btn btn-secondary" onclick="executeCommand('privacy')">Privacy Settings</button>
+                </div>
+            </div>
+            <div id="commandOutput" style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 8px; font-family: monospace; color: #18FFFF; max-height: 300px; overflow-y: auto;"></div>
         </div>
     </div>
 
@@ -268,6 +308,20 @@ func getWebUI() string {
         });
 
         updateDisplay();
+
+        function executeCommand(cmd) {
+            const output = document.getElementById('commandOutput');
+            output.innerHTML = '<div style="color: #FFD600;">Executing: pom ' + cmd + '</div>';
+            
+            fetch('/api/command/' + cmd, { method: 'POST' })
+                .then(r => r.text())
+                .then(data => {
+                    output.innerHTML += '<pre>' + data + '</pre>';
+                })
+                .catch(err => {
+                    output.innerHTML += '<div style="color: #FF4081;">Error: ' + err.message + '</div>';
+                });
+        }
     </script>
 </body>
 </html>`

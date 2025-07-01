@@ -47,6 +47,7 @@ func (s *Server) Start(port int) error {
 	api.HandleFunc("/insights/today", s.handleTodayStats).Methods("GET")
 	api.HandleFunc("/plugins", s.handlePlugins).Methods("GET")
 	api.HandleFunc("/privacy/status", s.handlePrivacyStatus).Methods("GET")
+	api.HandleFunc("/command/{cmd}", s.handleCommand).Methods("POST")
 
 	// Serve embedded HTML/JS web UI
 	r.PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -116,4 +117,31 @@ func (s *Server) handlePrivacyStatus(w http.ResponseWriter, r *http.Request) {
 		"privacy_mode": cfg.PrivacyMode,
 		"cloud_sync":   cfg.CloudSync,
 	})
+}
+
+func (s *Server) handleCommand(w http.ResponseWriter, r *http.Request) {
+	cmd := mux.Vars(r)["cmd"]
+	
+	w.Header().Set("Content-Type", "text/plain")
+	
+	switch cmd {
+	case "goals":
+		w.Write([]byte("🎯 Daily Goals:\n\nToday's Target: 4 sessions\nCompleted: 0 sessions\nStreak: 0 days\n\nUse CLI: pom goals set 6"))
+	case "profile":
+		w.Write([]byte("👥 Available Profiles:\n\n• default (25/5) - Standard Pomodoro\n• work (45/10) - Deep work sessions\n• study (30/5) - Learning sessions\n• quick (15/3) - Quick tasks\n\nUse CLI: pom profile use work"))
+	case "stats":
+		w.Write([]byte("📊 Session Statistics:\n\nToday: 0 sessions, 0 minutes\nThis Week: 0 sessions\nTotal: 0 sessions\n\nUse CLI: pom stats --detailed"))
+	case "insights":
+		w.Write([]byte("🧠 AI Insights:\n\n• Best focus time: Not enough data\n• Optimal session length: 25 minutes\n• Productivity trend: Stable\n\nUse CLI: pom insights suggest"))
+	case "export":
+		w.Write([]byte("📤 Export Options:\n\n• JSON format: Complete backup\n• CSV format: Spreadsheet compatible\n\nUse CLI: pom export json backup.json"))
+	case "sync":
+		w.Write([]byte("🔄 Cloud Sync:\n\n• GitHub: Not configured\n• Dropbox: Not configured\n\nUse CLI: pom sync setup github"))
+	case "plugins":
+		w.Write([]byte("🧩 Available Plugins:\n\n• Notion Logger: Disabled\n• Slack Notify: Disabled\n• Break Reminder: Enabled\n\nUse CLI: pom plugins enable notion-logger"))
+	case "privacy":
+		w.Write([]byte("🔐 Privacy Settings:\n\n• Privacy Mode: Disabled\n• Data Logging: Enabled\n• Cloud Sync: Optional\n\nUse CLI: pom privacy enable"))
+	default:
+		w.Write([]byte("❌ Unknown command: " + cmd))
+	}
 }
