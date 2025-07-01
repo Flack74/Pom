@@ -48,16 +48,20 @@ func (s *Server) Start(port int) error {
 	api.HandleFunc("/plugins", s.handlePlugins).Methods("GET")
 	api.HandleFunc("/privacy/status", s.handlePrivacyStatus).Methods("GET")
 
-	// Serve React app with SPA routing
-	fs := http.FileServer(http.Dir("./web/build/"))
-	r.PathPrefix("/static/").Handler(fs)
+	// Serve static files
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./web/build/static/"))))
+	
+	// Serve other assets
+	r.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./web/build/favicon.ico")
+	})
+	r.HandleFunc("/manifest.json", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./web/build/manifest.json")
+	})
+	
+	// Serve React app for all other routes
 	r.PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// For SPA routing, serve index.html for non-API routes
-		if r.URL.Path != "/" && !fileExists("./web/build"+r.URL.Path) {
-			http.ServeFile(w, r, "./web/build/index.html")
-		} else {
-			fs.ServeHTTP(w, r)
-		}
+		http.ServeFile(w, r, "./web/build/index.html")
 	})
 
 	addr := fmt.Sprintf(":%d", port)
