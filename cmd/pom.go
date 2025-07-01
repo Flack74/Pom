@@ -207,10 +207,21 @@ func StartPomodoro(workMin, breakMin, numberOfSess int, taskID string) bool {
 
 		// Break period (skip after last session)
 		if sess < numberOfSess {
+			// Execute break start plugins
+			breakData := map[string]string{
+				"DURATION": fmt.Sprintf("%d", breakMin),
+				"SESSION": fmt.Sprintf("%d", sess),
+				"DATE": time.Now().Format("2006-01-02T15:04:05Z"),
+			}
+			config.ExecutePlugins("break_start", breakData)
+
 			fmt.Printf("\n%s☕ Break Time%s\n", theme.HighlightColor, theme.TextColor)
 			if !countdown(breakTime, "Break", theme.ProgressColor, &timerState, pauseChan, resumeChan) {
 				return false
 			}
+
+			// Execute break end plugins
+			config.ExecutePlugins("break_end", breakData)
 
 			// Play sound and show notification
 			if err := logs.PlaySound("break_end"); err != nil {

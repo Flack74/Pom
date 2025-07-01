@@ -1,0 +1,80 @@
+{
+  "sessions": [],
+  "tasks": [
+    {
+      "id": "1751269199490810928",
+      "title": "Test Task",
+      "description": "",
+      "created_at": "2025-06-30T13:09:59.49081206+05:30",
+      "completed_at": "0001-01-01T00:00:00Z",
+      "sessions": 0,
+      "minutes": 0,
+      "tags": [],
+      "is_completed": false
+    },
+    {
+      "id": "1751377033502104664",
+      "title": "Test task",
+      "description": "",
+      "created_at": "2025-07-01T19:07:13.502105746+05:30",
+      "completed_at": "0001-01-01T00:00:00Z",
+      "sessions": 0,
+      "minutes": 0,
+      "tags": [],
+      "is_completed": false
+    }
+  ],
+  "goal": {
+    "daily_session_target": 8,
+    "daily_minutes": 240,
+    "start_date": "2025-06-30T13:09:52.194497072+05:30",
+    "end_date": "0001-01-01T00:00:00Z"
+  },
+  "progress": {
+    "current_date": "2025-07-01T11:45:12.468739239+05:30",
+    "sessions_today": 3,
+    "minutes_today": 3,
+    "current_streak": 0,
+    "longest_streak": 0,
+    "last_update_date": "2025-07-01T14:23:15.520191772+05:30"
+  },
+  "config": {
+    "work_minutes": 25,
+    "break_minutes": 5,
+    "num_sessions": 4,
+    "current_profile": "default",
+    "privacy_mode": false,
+    "cloud_sync": false,
+    "cloud_provider": ""
+  },
+  "profiles": [
+    {
+      "name": "default",
+      "work_minutes": 25,
+      "break_minutes": 5,
+      "num_sessions": 4,
+      "description": "Standard Pomodoro"
+    },
+    {
+      "name": "work",
+      "work_minutes": 45,
+      "break_minutes": 10,
+      "num_sessions": 3,
+      "description": "Deep work sessions"
+    },
+    {
+      "name": "study",
+      "work_minutes": 30,
+      "break_minutes": 5,
+      "num_sessions": 4,
+      "description": "Study sessions"
+    },
+    {
+      "name": "quick",
+      "work_minutes": 15,
+      "break_minutes": 3,
+      "num_sessions": 6,
+      "description": "Quick tasks"
+    }
+  ]
+}
