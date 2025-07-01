@@ -88,14 +88,15 @@ pom export json backup.json
 
 ### Web Interface
 ```bash
+# True background daemon (terminal free) ✅ RECOMMENDED
+nohup pom web &
+nohup pom web -p 3000 &    # Custom port
+
 # Foreground mode (terminal blocked)
 pom web
 
-# Background daemon mode (terminal free) ✅ RECOMMENDED
-pom web -d
-
-# Custom port
-pom web -d -p 3000
+# Daemon instructions
+pom web -d                 # Shows daemon setup help
 
 # Access features:
 # 1. Open browser: http://localhost:8080
@@ -118,8 +119,8 @@ curl http://localhost:8080/api/profiles
 # 3. Check daemon process
 ps aux | grep pom
 
-# 4. Try different port
-pom web -d -p 3001
+# 4. Start true daemon
+nohup pom web -p 3001 &
 
 # 5. Stop all instances
 pkill pom
