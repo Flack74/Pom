@@ -51,9 +51,10 @@ Examples:
 			if err != nil {
 				fmt.Printf("Profile '%s' not found, using default settings\n", profileName)
 			} else {
-				if workMin == 25 { workMin = profile.WorkMinutes }
-				if breakMin == 5 { breakMin = profile.BreakMinutes }
-				if numberOfSess == 1 { numberOfSess = profile.NumSessions }
+				// Only use profile values if user didn't specify flags
+				if !cmd.Flags().Changed("work") { workMin = profile.WorkMinutes }
+				if !cmd.Flags().Changed("break") { breakMin = profile.BreakMinutes }
+				if !cmd.Flags().Changed("sessions") { numberOfSess = profile.NumSessions }
 				fmt.Printf("Using profile: %s\n", profile.Name)
 			}
 		} else {
@@ -62,9 +63,9 @@ Examples:
 			if cfg.CurrentProfile != "" {
 				profile, err := config.GetProfile(cfg.CurrentProfile)
 				if err == nil {
-					if workMin == 25 { workMin = profile.WorkMinutes }
-					if breakMin == 5 { breakMin = profile.BreakMinutes }
-					if numberOfSess == 1 { numberOfSess = profile.NumSessions }
+					if !cmd.Flags().Changed("work") { workMin = profile.WorkMinutes }
+					if !cmd.Flags().Changed("break") { breakMin = profile.BreakMinutes }
+					if !cmd.Flags().Changed("sessions") { numberOfSess = profile.NumSessions }
 				}
 			}
 		}
@@ -141,7 +142,7 @@ Examples:
 func init() {
 	startCmd.Flags().IntVarP(&workMin, "work", "w", 25, "work minutes")
 	startCmd.Flags().IntVarP(&breakMin, "break", "b", 5, "break minutes")
-	startCmd.Flags().IntVarP(&numberOfSess, "sessions", "s", 1, "number of sessions")
+	startCmd.Flags().IntVarP(&numberOfSess, "sessions", "s", 4, "number of sessions")
 	startCmd.Flags().BoolVarP(&saveConfig, "save-config", "c", false, "save as default configuration")
 	startCmd.Flags().StringVarP(&taskID, "task", "t", "", "link session to a task ID")
 	startCmd.Flags().StringVarP(&profileName, "profile", "p", "", "use specific profile")

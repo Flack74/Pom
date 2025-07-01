@@ -48,20 +48,19 @@ func (s *Server) Start(port int) error {
 	api.HandleFunc("/plugins", s.handlePlugins).Methods("GET")
 	api.HandleFunc("/privacy/status", s.handlePrivacyStatus).Methods("GET")
 
-	// Serve static files
-	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./web/build/static/"))))
-	
-	// Serve other assets
-	r.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./web/build/favicon.ico")
-	})
-	r.HandleFunc("/manifest.json", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./web/build/manifest.json")
-	})
-	
-	// Serve React app for all other routes
+	// Serve simple HTML/JS web UI
 	r.PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./web/build/index.html")
+		// Try local static file first
+		if _, err := os.Stat("./web/static/index.html"); err == nil {
+			http.ServeFile(w, r, "./web/static/index.html")
+		} else if _, err := os.Stat("/usr/share/pom/web/static/index.html"); err == nil {
+			// Try system location
+			http.ServeFile(w, r, "/usr/share/pom/web/static/index.html")
+		} else {
+			// Fallback inline HTML
+			w.Header().Set("Content-Type", "text/html")
+			w.Write([]byte(`<!DOCTYPE html><html><head><title>🍅 Pom</title></head><body><h1>🍅 Pom Web UI</h1><p>Simple timer interface</p></body></html>`))
+		}
 	})
 
 	addr := fmt.Sprintf(":%d", port)

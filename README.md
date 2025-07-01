@@ -328,3 +328,5 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ---
 
 **🚀 Ready to boost your productivity? Start with `pom start` or `pom web`!**
+
+**Built with ❤️ by Flack**
